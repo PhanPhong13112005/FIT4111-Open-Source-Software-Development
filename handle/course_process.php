@@ -40,7 +40,7 @@ function handleGetCourseById($id) {
  */
 function handleCreateCourse() {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header("Location: ../views/course.php?error=Phương thức không hợp lệ");
+        header("Location: ../views/admin/manage_courses.php?error=Phương thức không hợp lệ");
         exit();
     }
 
@@ -48,7 +48,7 @@ function handleCreateCourse() {
     $fields = ['title', 'description', 'teacher', 'price', 'image'];
     foreach ($fields as $field) {
         if (!isset($_POST[$field])) {
-            header("Location: ../views/course/create_course.php?error=Thiếu thông tin $field");
+            header("Location: ../views/admin/create_courses.php?error=Thiếu thông tin $field");
             exit();
         }
     }
@@ -60,7 +60,7 @@ function handleCreateCourse() {
     $image = trim($_POST['image']);
 
     if (empty($title) || empty($teacher)) {
-        header("Location: ../views/course/create_course.php?error=Vui lòng điền đầy đủ thông tin");
+        header("Location: ../views/admin/create_courses.php?error=Vui lòng điền đầy đủ thông tin");
         exit();
     }
 
@@ -68,9 +68,9 @@ function handleCreateCourse() {
     $result = addCourse($title, $description, $teacher, $price, $image);
 
     if ($result) {
-        header("Location: ../views/course.php?success=Thêm khóa học thành công");
+        header("Location: ../views/admin/manage_courses.php?success=Thêm khóa học thành công");
     } else {
-        header("Location: ../views/course/create_course.php?error=Có lỗi xảy ra khi thêm khóa học");
+        header("Location: ../views/admin/create_course.php?error=Có lỗi xảy ra khi thêm khóa học");
     }
     exit();
 }
@@ -80,14 +80,14 @@ function handleCreateCourse() {
  */
 function handleEditCourse() {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        header("Location: ../views/course.php?error=Phương thức không hợp lệ");
+        header("Location: ../views/admin/manage_courses.php?error=Phương thức không hợp lệ");
         exit();
     }
 
     $required = ['id', 'title', 'description', 'teacher', 'price', 'image'];
     foreach ($required as $r) {
         if (!isset($_POST[$r])) {
-            header("Location: ../views/course.php?error=Thiếu thông tin $r");
+            header("Location: ../views/admin/manage_courses.php?error=Thiếu thông tin $r");
             exit();
         }
     }
@@ -100,16 +100,16 @@ function handleEditCourse() {
     $image = trim($_POST['image']);
 
     if (empty($title) || empty($teacher)) {
-        header("Location: ../views/course/edit_course.php?id=" . $id . "&error=Vui lòng điền đầy đủ thông tin");
+        header("Location: ../views/admin/edit_course.php?id=" . $id . "&error=Vui lòng điền đầy đủ thông tin");
         exit();
     }
 
     $result = updateCourse($id, $title, $description, $teacher, $price, $image);
 
     if ($result) {
-        header("Location: ../views/course.php?success=Cập nhật khóa học thành công");
+        header("Location: ../views/admin/manage_courses.php?success=Cập nhật khóa học thành công");
     } else {
-        header("Location: ../views/course/edit_course.php?id=" . $id . "&error=Cập nhật khóa học thất bại");
+        header("Location: ../views/admin/edit_course.php?id=" . $id . "&error=Cập nhật khóa học thất bại");
     }
     exit();
 }
@@ -119,27 +119,27 @@ function handleEditCourse() {
  */
 function handleDeleteCourse() {
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-        header("Location: ../views/course.php?error=Phương thức không hợp lệ");
+        header("Location: ../views/admin/manage_courses.php?error=Phương thức không hợp lệ");
         exit();
     }
 
     if (!isset($_GET['id']) || empty($_GET['id'])) {
-        header("Location: ../views/course.php?error=Không tìm thấy ID khóa học");
+        header("Location: ../views/admin/manage_courses.php?error=Không tìm thấy ID khóa học");
         exit();
     }
 
     $id = $_GET['id'];
     if (!is_numeric($id)) {
-        header("Location: ../views/course.php?error=ID khóa học không hợp lệ");
+        header("Location: ../views/admin/manage_courses.php?error=ID khóa học không hợp lệ");
         exit();
     }
 
     $result = deleteCourse($id);
 
     if ($result) {
-        header("Location: ../views/course.php?success=Xóa khóa học thành công");
+        header("Location: ../views/admin/manage_courses.php?success=Xóa khóa học thành công");
     } else {
-        header("Location: ../views/course.php?error=Xóa khóa học thất bại");
+        header("Location: ../views/admin/manage_courses.php?error=Xóa khóa học thất bại");
     }
     exit();
 }

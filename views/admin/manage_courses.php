@@ -54,7 +54,7 @@ checkLogin(__DIR__ . '/../index.php');
         }, 3000);
         </script>
 
-        <a href="course/create_course.php" class="btn btn-primary mb-3">➕ Thêm khóa học</a>
+        <a href="../admin/create_courses.php" class="btn btn-primary mb-3">➕ Thêm khóa học</a>
 
         <table class="table table-bordered table-striped align-middle">
             <thead class="table-light">
@@ -91,8 +91,8 @@ checkLogin(__DIR__ . '/../index.php');
                             </td>
                             <td><?= htmlspecialchars($course["created_at"]) ?></td>
                             <td>
-                                <a href="course/edit_course.php?id=<?= $course["id"] ?>" class="btn btn-warning btn-sm">Sửa</a>
-                                <a href="../handle/course_process.php?action=delete&id=<?= $course["id"] ?>"
+                                <a href="../admin/edit_courses.php?id=<?= $course["id"] ?>" class="btn btn-warning btn-sm">Sửa</a>
+                                <a href="/baitaplon/handle/course_process.php?action=delete&id=<?= $course["id"] ?>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này?')">Xóa</a>
                             </td>

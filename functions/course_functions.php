@@ -104,7 +104,7 @@ function updateCourse($id, $title, $description, $teacher, $price, $image) {
     $stmt = mysqli_prepare($conn, $sql);
     
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "sssds i", $title, $description, $teacher, $price, $image, $id);
+        mysqli_stmt_bind_param($stmt, "sssdsi", $title, $description, $teacher, $price, $image, $id);
         $success = mysqli_stmt_execute($stmt);
         
         mysqli_stmt_close($stmt);

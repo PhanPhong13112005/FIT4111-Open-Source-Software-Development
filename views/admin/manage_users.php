@@ -54,7 +54,7 @@ checkLogin(__DIR__ . '/../index.php');
             }, 3000);
         </script>
 
-        <a href="user/create_user.php" class="btn btn-primary mb-3">➕ Thêm người dùng</a>
+        <a href="../admin/create_users.php" class="btn btn-primary mb-3">➕ Thêm người dùng</a>
 
         <table class="table table-bordered align-middle">
             <thead class="table-light">
@@ -62,6 +62,7 @@ checkLogin(__DIR__ . '/../index.php');
                     <th scope="col">ID</th>
                     <th scope="col">Tên đăng nhập</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Số Điện thoại</th>
                     <th scope="col">Vai trò</th>
                     <th scope="col" style="width: 150px;">Thao tác</th>
                 </tr>
@@ -78,6 +79,7 @@ checkLogin(__DIR__ . '/../index.php');
                             <td><?= htmlspecialchars($user['id']) ?></td>
                             <td><?= htmlspecialchars($user['username']) ?></td>
                             <td><?= htmlspecialchars($user['email']) ?></td>
+                            <td><?= htmlspecialchars($user['phone'])?></td>
                             <td><?= htmlspecialchars($user['role'])?></td>
                             <td>
                                 <a href="user/edit_user.php?id=<?= $user['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
