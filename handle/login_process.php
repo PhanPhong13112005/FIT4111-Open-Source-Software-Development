@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         //Phân quyền chuyển trang
         if ($user['role'] === 'admin') {
-            header('Location: ../views/admin/menu_admin.php');
+            header('Location: ../views/admin/dashboard.php');
         } elseif ($user['role'] === 'teacher') {
             header("Location: ../views/teacher/menu_teacher.php");
         }

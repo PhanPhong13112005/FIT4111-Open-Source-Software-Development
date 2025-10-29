@@ -14,15 +14,24 @@ checkLogin(__DIR__ . '/../index.php');
 </head>
 
 <body>
-    <header class="admin-header">
-        <h2>Trang quản trị hệ thống</h2>
-        <nav>
-            <a href="dashboard.php">Tổng quan</a>
-            <a href="manage_courses.php">Quản lý khóa học</a>
-            <a href="manage_users.php">Quản lý người dùng</a>
-            <a href="../../handle/logout_process.php" class="logout">Đăng xuất</a>
-        </nav>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="dashboard.php">Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.php">Tổng quan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage_users.php">Quản lý người dùng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage_courses.php">Quản lý khóa học</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link text-danger" href="../../handle/logout.php">Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div class="container mt-3">
         <h3 class="mt-3 mb-4">QUẢN LÝ NGƯỜI DÙNG</h3>
         <?php
@@ -82,7 +91,7 @@ checkLogin(__DIR__ . '/../index.php');
                             <td><?= htmlspecialchars($user['phone'])?></td>
                             <td><?= htmlspecialchars($user['role'])?></td>
                             <td>
-                                <a href="user/edit_user.php?id=<?= $user['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
+                                <a href="../admin/edit_users.php?id=<?= $user['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
                                 <a href="../handle/user_process.php?action=delete&id=<?= $user['id'] ?>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')">Xóa</a>

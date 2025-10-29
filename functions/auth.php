@@ -49,7 +49,7 @@ function getCurrentUser() {
 /**
  * Kiểm tra đăng nhập
  */
-function isLoggedIn() {
+function isLoggedIn() { 
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }

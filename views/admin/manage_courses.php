@@ -12,18 +12,27 @@ checkLogin(__DIR__ . '/../index.php');
 </head>
 
 <body>
-  <header class="admin-header">
-    <h2>Trang quản trị hệ thống</h2>
-    <nav>
-      <a href="dashboard.php">Tổng quan</a>
-      <a href="manage_courses.php">Quản lý khóa học</a>
-      <a href="manage_users.php">Quản lý người dùng</a>
-      <a href="../../handle/logout_process.php" class="logout">Đăng xuất</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="dashboard.php">Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="adminNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="dashboard.php">Tổng quan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage_users.php">Quản lý người dùng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="manage_courses.php">Quản lý khóa học</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link text-danger" href="../../handle/logout.php">Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
-  </header>
     <div class="container mt-3">
 
-        <h3 class="mt-3">Quản lý khóa học</h3>
+        <h3 class="mt-3">QUẢN LÝ KHÓA HỌC</h3>
 
         <?php
         // Thông báo thành công
@@ -44,14 +53,14 @@ checkLogin(__DIR__ . '/../index.php');
         ?>
 
         <script>
-        // Ẩn alert sau 3 giây
-        setTimeout(() => {
-            let alertNode = document.querySelector('.alert');
-            if (alertNode) {
-                let bsAlert = bootstrap.Alert.getOrCreateInstance(alertNode);
-                bsAlert.close();
-            }
-        }, 3000);
+            // Ẩn alert sau 3 giây
+            setTimeout(() => {
+                let alertNode = document.querySelector('.alert');
+                if (alertNode) {
+                    let bsAlert = bootstrap.Alert.getOrCreateInstance(alertNode);
+                    bsAlert.close();
+                }
+            }, 3000);
         </script>
 
         <a href="../admin/create_courses.php" class="btn btn-primary mb-3">➕ Thêm khóa học</a>
@@ -91,7 +100,8 @@ checkLogin(__DIR__ . '/../index.php');
                             </td>
                             <td><?= htmlspecialchars($course["created_at"]) ?></td>
                             <td>
-                                <a href="../admin/edit_courses.php?id=<?= $course["id"] ?>" class="btn btn-warning btn-sm">Sửa</a>
+                                <a href="../admin/edit_courses.php?id=<?= $course["id"] ?>"
+                                    class="btn btn-warning btn-sm">Sửa</a>
                                 <a href="/baitaplon/handle/course_process.php?action=delete&id=<?= $course["id"] ?>"
                                     class="btn btn-danger btn-sm"
                                     onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này?')">Xóa</a>

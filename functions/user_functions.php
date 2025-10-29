@@ -9,7 +9,7 @@ function getAllUsers() {
     $conn = getDbConnection();
     
     // Truy vấn lấy tất cả users
-    $sql = "SELECT id, username, email, role FROM users ORDER BY id";
+    $sql = "SELECT id, username, email, role, phone FROM users ORDER BY id";
     $result = mysqli_query($conn, $sql);
     
     $users = [];
@@ -28,27 +28,34 @@ function getAllUsers() {
  * Thêm student mới
  * @param string $username tên
  * @param string $email thư
+ * @param string $phone
+ * @param string $password
  * @param string $role vai trò
  * @return bool True nếu thành công, False nếu thất bại
  */
-function addUser($username, $email,$role) {
+function addUser($username, $email, $role, $password, $phone) {
     $conn = getDbConnection();
-    
-    $sql = "INSERT INTO users (username, email) VALUES (?, ?)";
+
+    // Mã hóa mật khẩu an toàn
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Câu lệnh SQL thêm người dùng
+    $sql = "INSERT INTO users (username, email, password, phone, role) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
-    
+
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ss", $username, $email);
+        mysqli_stmt_bind_param($stmt, "sssss", $username, $email, $hashedPassword, $phone, $role);
         $success = mysqli_stmt_execute($stmt);
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         return $success;
     }
-    
+
     mysqli_close($conn);
     return false;
 }
+
 
 /**
  * Lấy thông tin một student theo ID
@@ -84,17 +91,19 @@ function getUserById($id) {
  * Cập nhật thông tin student
  * @param int $id ID của người dùng
  * @param string $username tên người dùng mới
- * @param string $gmail gmail mới
+ * @param string $email email mới
+ * @param string $role vai trò
+ * @param string $phone số điện thoại
  * @return bool True nếu thành công, False nếu thất bại
  */
-function updateUser($id, $username, $gmail,$role) {
+function updateUser($id, $username, $email, $role, $phone) {
     $conn = getDbConnection();
     
-    $sql = "UPDATE users SET username = ?, gmail = ?, role = ? WHERE id = ?";
+    $sql = "UPDATE users SET username = ?, email = ?, role = ?, phone = ? WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
     
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "sssi", $username, $gmail, $roly, $id);
+        mysqli_stmt_bind_param($stmt, "ssssi", $username, $email, $role, $phone, $id);
         $success = mysqli_stmt_execute($stmt);
         
         mysqli_stmt_close($stmt);
@@ -105,6 +114,7 @@ function updateUser($id, $username, $gmail,$role) {
     mysqli_close($conn);
     return false;
 }
+
 
 /**
  * Xóa user theo ID
