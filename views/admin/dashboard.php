@@ -105,9 +105,10 @@ $activities = $conn->query("
                     <li class="nav-item"><a class="nav-link" href="manage_users.php">Quản lý người dùng</a></li>
                     <li class="nav-item"><a class="nav-link" href="manage_courses.php">Quản lý khóa học</a></li>
                 </ul>
+
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link text-danger" href="../../handle/logout.php"><i
-                                class="bi bi-box-arrow-right"></i> Đăng xuất</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="../../handle/logout_process.php"><i>Đăng
+                                xuất</a></li>
                 </ul>
             </div>
         </div>
