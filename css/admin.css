@@ -1,0 +1,75 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #f7f9fc;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-header {
+  background: #003399;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-header nav a {
+  color: white;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.admin-header nav a.logout {
+  color: #ffcccb;
+}
+
+h3 {
+  margin-left: 20px;
+}
+
+table {
+  margin: 20px;
+  border-collapse: collapse;
+  width: 95%;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+th {
+  background: #003399;
+  color: white;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.btn-add {
+  background: #0078d7;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 20px;
+  display: inline-block;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin: 10px;
+  width: 200px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.stats {
+  display: flex;
+  margin-left: 20px;
+}
