@@ -45,7 +45,7 @@ if (!empty($_GET['keyword'])) {
                 <p>Nơi khơi dậy đam mê và giúp bạn bắt đầu hành trình trở thành lập trình viên chuyên nghiệp.</p>
             </div>
             <div class="banner-image">
-                <img src="../../images/banner.png" alt="Banner học lập trình">
+                <img src="../../images/banner.jpg" alt="Banner học lập trình">
             </div>
         </div>
 

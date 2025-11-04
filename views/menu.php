@@ -36,7 +36,7 @@ $currentUser = getCurrentUser();
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Navbar brand -->
                 <a class="navbar-brand mt-2 mt-lg-0" href="/BaiTapLon/views/student/menu_student.php">
-                    <img src="../images/fitdnu_logo.png" height="40" alt="FIT-DNU Logo" loading="lazy" />
+                    <img src="/BaiTapLon/images/logo.png" height="40" alt="Logo" title="Trang chủ">
                 </a>
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -58,7 +58,7 @@ $currentUser = getCurrentUser();
                 <div class="dropdown">
                     <a class="dropdown-toggle d-flex align-items-center hidden-arrow text-decoration-none" href="#"
                         id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="../images/aiotlab_logo.png" class="rounded-circle" height="35" alt="Avatar"
+                        <img src="/BaiTapLon/images/aiotlab_logo.png" class="rounded-circle" height="35" alt="Avatar"
                             loading="lazy" />
                         <span
                             class="ms-2 text-dark fw-semibold"><?= htmlspecialchars($currentUser['username'] ?? 'Sinh viên') ?></span>
