@@ -22,7 +22,7 @@ session_start();
             </div>
             <form action="./handle/login_process.php" method="POST">
                 <div class="form-group mb-3">
-                    <label class="form-label">Email hoặc Số điện thoại:</label>
+                    <label class="form-label">Tên người dùng</label>
                     <input type="text" name="username" class="form-control form-control-lg" required>
                 </div>
                 <div class="form-group mb-4">

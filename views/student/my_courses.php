@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../../functions/auth.php';
-require_once __DIR__ . '/../../functions/enrollments.php';
+require_once __DIR__ . '/../../functions/enrollments_functions.php';
 checkLogin('/BaiTapLon/index.php');
 
 $user_id = $_SESSION['user_id'];
@@ -50,7 +50,7 @@ $courses = getEnrollmentsByStudent($user_id);
 
                                 <div class="mt-auto d-flex justify-content-between">
                                     <a href="course_detail.php?id=<?= $course['id'] ?>" class="btn btn-outline-primary btn-sm">Chi tiết</a>
-                                    <a href="/BaiTapLon/handle/cancel_enrollment.php?id=<?= $course['id'] ?>" 
+                                    <a href="/BaiTapLon/handle/cancel_process.php?id=<?= $course['id'] ?>" 
                                        class="btn btn-danger btn-sm"
                                        onclick="return confirm('Bạn có chắc chắn muốn hủy đăng ký khóa học này không?');">
                                        Hủy
