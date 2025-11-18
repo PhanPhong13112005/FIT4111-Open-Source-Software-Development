@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../functions/auth.php';
-require_once __DIR__ . '/../functions/enrollments.php';
+require_once __DIR__ . '/../functions/enrollment_functions.php';
 checkLogin('/BaiTapLon/index.php');
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {

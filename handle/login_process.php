@@ -29,18 +29,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
         //Phân quyền chuyển trang
         if ($user['role'] === 'admin') {
-            header('Location: ../views/admin/dashboard.php');
+            header('Location: /BaiTapLon/views/admin/dashboard.php');
         } elseif ($user['role'] === 'teacher') {
-            header("Location: ../views/teacher/menu_teacher.php");
-        }
-        else {
-            header('Location: ../views/student/menu_student.php');
+            header('Location: /BaiTapLon/views/teacher/menu_teacher.php');
+        } else {
+            header('Location: /BaiTapLon/views/student/menu_student.php');
         }
         exit();
     } else {
         $_SESSION['error'] = 'Tên đăng nhập hoặc mật khẩu không đúng!';
         mysqli_close($conn);
-        header('Location: ../index.php');
+        header('Location: /BaiTapLon/index.php');
         exit();
     }
 }

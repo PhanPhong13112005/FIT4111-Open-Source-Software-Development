@@ -2,11 +2,11 @@
 /**
  * Kiểm tra đăng nhập
  */
-function checkLogin($redirectPath = '../index.php') {
+function checkLogin($redirectPath = '/baitaplon/index.php') {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-    if (!isset($_SESSION['user_id']) || !isset($_SESSION['username'])) {
+    if (!isset($_SESSION['user_id'])) {
         $_SESSION['error'] = 'Bạn cần đăng nhập để truy cập trang này!';
         header('Location: ' . $redirectPath);
         exit();
@@ -16,15 +16,12 @@ function checkLogin($redirectPath = '../index.php') {
 /**
  * Đăng xuất
  */
-function logout($redirectPath = '../index.php') {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+function logout($redirectPath = '/baitaplon/index.php') {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    
     session_unset();
     session_destroy();
 
-    session_start();
-    $_SESSION['success'] = 'Đăng xuất thành công!';
     header('Location: ' . $redirectPath);
     exit();
 }

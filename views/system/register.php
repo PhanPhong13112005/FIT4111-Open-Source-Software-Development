@@ -27,7 +27,7 @@
         }
         ?>
 
-        <form action="../handle/register_process.php" method="POST">
+        <form action="/baitaplon/handle/register_process.php" method="POST">
             <label>Tên người dùng:</label>
             <input type="text" name="username" required>
 
@@ -46,7 +46,7 @@
             <button type="submit">Đăng ký</button>
         </form>
 
-        <p>Đã có tài khoản? <a href="/baitaplon/index.php">Đăng nhập</a></p>
+        <p>Đã có tài khoản? <a href="/baitaplon/views/system/login.php">Đăng nhập</a></p>
     </div>
 </body>
 
