@@ -75,14 +75,11 @@ Hệ thống quản lý đăng ký khóa học online là ứng dụng web đư�
 - Đăng ký / Hủy đăng ký khóa học  
 - Xem lịch học và trạng thái đăng ký  
 - Cập nhật hồ sơ cá nhân  
-- Làm bài kiểm tra, xem tiến độ  
+- Thanh toán
 
 ### 👨‍🏫 Giảng viên
 - Quản lý khóa học (Tạo mới, Chỉnh sửa, Xóa)  
 - Quản lý nội dung bài học  
-- Xem danh sách học viên đăng ký  
-- Quản lý bài tập & kiểm tra  
-- Chấm điểm và nhận xét  
 
 ### 🛠️ Quản trị viên
 - Quản lý người dùng (Tạo, Sửa, Xóa, Phân quyền)  
