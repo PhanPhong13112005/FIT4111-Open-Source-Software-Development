@@ -65,6 +65,27 @@ checkLogin(__DIR__ . '/../index.php');
         </script>
 
         <a href="../admin/create_users.php" class="btn btn-primary mb-3">➕ Thêm người dùng</a>
+        <form method="GET" class="row g-2 mb-3 align-items-center">
+            <div class="col-auto">
+                <select name="role" class="form-select" onchange="this.form.submit()">
+                    <option value="">Tất cả vai trò</option>
+                    <option value="student" <?= (isset($_GET['role']) && $_GET['role'] === 'student') ? 'selected' : '' ?>>
+                        Học viên</option>
+                    <option value="teacher" <?= (isset($_GET['role']) && $_GET['role'] === 'teacher') ? 'selected' : '' ?>>
+                        Giảng viên</option>
+                    <option value="admin" <?= (isset($_GET['role']) && $_GET['role'] === 'admin') ? 'selected' : '' ?>>Quản
+                        trị viên</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="text" name="keyword" class="form-control" placeholder="Tìm theo tên/email"
+                    value="<?= htmlspecialchars($_GET['keyword'] ?? '') ?>">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-secondary">Reset</a>
+            </div>
+        </form>
 
         <table class="table table-bordered align-middle">
             <thead class="table-light">
@@ -89,8 +110,8 @@ checkLogin(__DIR__ . '/../index.php');
                             <td><?= htmlspecialchars($user['id']) ?></td>
                             <td><?= htmlspecialchars($user['username']) ?></td>
                             <td><?= htmlspecialchars($user['email']) ?></td>
-                            <td><?= htmlspecialchars($user['phone'])?></td>
-                            <td><?= htmlspecialchars($user['role'])?></td>
+                            <td><?= htmlspecialchars($user['phone']) ?></td>
+                            <td><?= htmlspecialchars($user['role']) ?></td>
                             <td>
                                 <a href="../admin/edit_users.php?id=<?= $user['id'] ?>" class="btn btn-warning btn-sm">Sửa</a>
                                 <a href="../handle/user_process.php?action=delete&id=<?= $user['id'] ?>"

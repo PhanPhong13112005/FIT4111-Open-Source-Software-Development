@@ -5,23 +5,56 @@ require_once 'db_connection.php';
  * Lấy tất cả danh sách courses từ database
  * @return array Danh sách courses
  */
-function getAllCourses() {
+function getAllCourses($keyword = '', $minPrice = 0, $maxPrice = 0)
+{
     $conn = getDbConnection();
-    
+
     $sql = "SELECT id, title, description, teacher, price, image, created_at 
-            FROM courses ORDER BY id";
-    $result = mysqli_query($conn, $sql);
-    
+            FROM courses WHERE 1=1";
+
+    $params = [];
+    $types = '';
+
+    // Lọc theo tên khóa học
+    if (!empty($keyword)) {
+        $sql .= " AND title LIKE ?";
+        $params[] = "%$keyword%";
+        $types .= 's';
+    }
+
+    // Lọc theo giá
+    if ($minPrice > 0) {
+        $sql .= " AND price >= ?";
+        $params[] = $minPrice;
+        $types .= 'd';
+    }
+    if ($maxPrice > 0) { // Chỉ áp dụng nếu maxPrice > 0
+        $sql .= " AND price <= ?";
+        $params[] = $maxPrice;
+        $types .= 'd';
+    }
+
+    $sql .= " ORDER BY id";
+
+    $stmt = mysqli_prepare($conn, $sql);
+    if ($stmt && count($params) > 0) {
+        mysqli_stmt_bind_param($stmt, $types, ...$params);
+    }
+
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
     $courses = [];
     if ($result && mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             $courses[] = $row;
         }
     }
-    
+
     mysqli_close($conn);
     return $courses;
 }
+
 
 /**
  * Thêm course mới
@@ -32,22 +65,23 @@ function getAllCourses() {
  * @param string $image
  * @return bool
  */
-function addCourse($title, $description, $teacher, $price, $image) {
+function addCourse($title, $description, $teacher, $price, $image)
+{
     $conn = getDbConnection();
-    
+
     $sql = "INSERT INTO courses (title, description, teacher, price, image, created_at)
             VALUES (?, ?, ?, ?, ?, NOW())";
     $stmt = mysqli_prepare($conn, $sql);
-    
+
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "sssds", $title, $description, $teacher, $price, $image);
         $success = mysqli_stmt_execute($stmt);
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         return $success;
     }
-    
+
     mysqli_close($conn);
     return false;
 }
@@ -57,14 +91,15 @@ function addCourse($title, $description, $teacher, $price, $image) {
  * @param int $id
  * @return array|null
  */
-function getCourseById($id) {
+function getCourseById($id)
+{
     $conn = getDbConnection();
-    
+
     $sql = "SELECT id, title, description, teacher, price, image, created_at 
             FROM courses 
             WHERE id = ? 
             LIMIT 1";
-    
+
     $stmt = mysqli_prepare($conn, $sql);
     if (!$stmt) {
         mysqli_close($conn);
@@ -95,23 +130,24 @@ function getCourseById($id) {
  * @param string $image
  * @return bool
  */
-function updateCourse($id, $title, $description, $teacher, $price, $image) {
+function updateCourse($id, $title, $description, $teacher, $price, $image)
+{
     $conn = getDbConnection();
-    
+
     $sql = "UPDATE courses 
             SET title = ?, description = ?, teacher = ?, price = ?, image = ?
             WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
-    
+
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "sssdsi", $title, $description, $teacher, $price, $image, $id);
         $success = mysqli_stmt_execute($stmt);
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         return $success;
     }
-    
+
     mysqli_close($conn);
     return false;
 }
@@ -121,25 +157,27 @@ function updateCourse($id, $title, $description, $teacher, $price, $image) {
  * @param int $id
  * @return bool
  */
-function deleteCourse($id) {
+function deleteCourse($id)
+{
     $conn = getDbConnection();
-    
+
     $sql = "DELETE FROM courses WHERE id = ?";
     $stmt = mysqli_prepare($conn, $sql);
-    
+
     if ($stmt) {
         mysqli_stmt_bind_param($stmt, "i", $id);
         $success = mysqli_stmt_execute($stmt);
-        
+
         mysqli_stmt_close($stmt);
         mysqli_close($conn);
         return $success;
     }
-    
+
     mysqli_close($conn);
     return false;
 }
-function getPopularCourses($limit = 5) {
+function getPopularCourses($limit = 5)
+{
     require_once 'db_connection.php';
 
     $conn = getDbConnection();
@@ -167,6 +205,55 @@ function getPopularCourses($limit = 5) {
 
     return $courses;
 }
+
+// Lấy tất cả khóa học của teacher
+function getCoursesByTeacher($teacher)
+{
+    $conn = getDbConnection();
+    $stmt = $conn->prepare("SELECT * FROM courses WHERE teacher=? ORDER BY id DESC");
+    $stmt->bind_param("s", $teacher);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $courses = [];
+    while ($row = $result->fetch_assoc()) {
+        $courses[] = $row;
+    }
+    $stmt->close();
+    $conn->close();
+    return $courses;
+}
+
+// Tổng số học viên đăng ký khóa học của teacher
+function getTotalEnrollmentsByTeacher($teacher)
+{
+    $conn = getDbConnection();
+    $stmt = $conn->prepare("
+        SELECT COUNT(e.id) as total 
+        FROM courses c 
+        LEFT JOIN enrollments e ON c.id = e.course_id
+        WHERE c.teacher=?
+    ");
+    $stmt->bind_param("s", $teacher);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    $conn->close();
+    return $result['total'] ?? 0;
+}
+
+// Lấy khóa học mới nhất của teacher
+function getLatestCourseTitle($teacher)
+{
+    $conn = getDbConnection();
+    $stmt = $conn->prepare("SELECT title FROM courses WHERE teacher=? ORDER BY created_at DESC LIMIT 1");
+    $stmt->bind_param("s", $teacher);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
+    $conn->close();
+    return $result['title'] ?? 'Chưa có khóa học';
+}
+
 
 
 ?>

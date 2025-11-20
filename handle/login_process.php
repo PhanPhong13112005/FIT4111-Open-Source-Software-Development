@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         if ($user['role'] === 'admin') {
             header('Location: /BaiTapLon/views/admin/dashboard.php');
         } elseif ($user['role'] === 'teacher') {
-            header('Location: /BaiTapLon/views/teacher/menu_teacher.php');
+            header('Location: /BaiTapLon/views/teacher/dashboard_teacher.php');
         } else {
             header('Location: /BaiTapLon/views/student/menu_student.php');
         }

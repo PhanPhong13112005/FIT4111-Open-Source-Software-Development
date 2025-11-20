@@ -6,19 +6,48 @@ require_once 'db_connection.php';
  * Lấy tất cả danh sách students từ database
  * @return array Danh sách students
  */
-function getAllUsers() {
+function getAllUsers($role = '', $keyword = '') {
     $conn = getDbConnection();
-    // Truy vấn lấy tất cả users
-    $sql = "SELECT id, username, email, role, phone FROM users ORDER BY id";
-    $result = mysqli_query($conn, $sql);
-    $users = [];
-    if ($result && mysqli_num_rows($result) > 0) {
-        // Lặp qua từng dòng trong kết quả truy vấn $result
-        while ($row = mysqli_fetch_assoc($result)) { 
-            $users[] = $row; // Thêm mảng $row vào cuối mảng $students
-        }
+
+    $sql = "SELECT id, username, email, role, phone FROM users";
+    $conditions = [];
+    $params = [];
+
+    // Lọc theo vai trò
+    if ($role !== '') {
+        $conditions[] = "role = ?";
+        $params[] = $role;
     }
-    
+
+    // Tìm kiếm theo username hoặc email
+    if ($keyword !== '') {
+        $conditions[] = "(username LIKE ? OR email LIKE ?)";
+        $params[] = "%$keyword%";
+        $params[] = "%$keyword%";
+    }
+
+    if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
+    }
+
+    $sql .= " ORDER BY id DESC";
+
+    $stmt = mysqli_prepare($conn, $sql);
+
+    if (!empty($params)) {
+        // Xây dựng kiểu dữ liệu cho bind_param
+        $types = str_repeat('s', count($params));
+        mysqli_stmt_bind_param($stmt, $types, ...$params);
+    }
+
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $users = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $users[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
     mysqli_close($conn);
     return $users;
 }

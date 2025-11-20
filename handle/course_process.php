@@ -24,21 +24,40 @@ switch ($action) {
 /**
  * Lấy tất cả danh sách khóa học
  */
-function handleGetAllCourses() {
-    return getAllCourses();
+function handleGetAllCourses()
+{
+    $keyword = $_GET['keyword'] ?? '';
+    $minPrice = 0;
+    $maxPrice = 0;
+
+    if (!empty($_GET['priceRange'])) {
+        list($min, $max) = explode('-', $_GET['priceRange']);
+        $minPrice = floatval($min);
+        $maxPrice = floatval($max);
+
+        // Nếu max = 0 (trên 1 triệu), không giới hạn trên
+        if ($maxPrice == 0) {
+            $maxPrice = 0;
+        }
+    }
+
+    return getAllCourses($keyword, $minPrice, $maxPrice);
 }
+
 
 /**
  * Lấy khóa học theo ID
  */
-function handleGetCourseById($id) {
+function handleGetCourseById($id)
+{
     return getCourseById($id);
 }
 
 /**
  *  Lấy danh sách khóa học phổ biến (nhiều lượt đăng ký nhất)
  */
-function handleGetPopularCourses($limit = 3) {
+function handleGetPopularCourses($limit = 3)
+{
     require __DIR__ . '/../database/db_connect.php';
 
     $sql = "
@@ -66,7 +85,8 @@ function handleGetPopularCourses($limit = 3) {
 /**
  * Xử lý tạo khóa học mới
  */
-function handleCreateCourse() {
+function handleCreateCourse()
+{
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header("Location: ../views/admin/manage_courses.php?error=Phương thức không hợp lệ");
         exit();
@@ -104,7 +124,8 @@ function handleCreateCourse() {
 /**
  * Xử lý chỉnh sửa khóa học
  */
-function handleEditCourse() {
+function handleEditCourse()
+{
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         header("Location: ../views/admin/manage_courses.php?error=Phương thức không hợp lệ");
         exit();
@@ -143,7 +164,8 @@ function handleEditCourse() {
 /**
  * Xử lý xóa khóa học
  */
-function handleDeleteCourse() {
+function handleDeleteCourse()
+{
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         header("Location: ../views/admin/manage_courses.php?error=Phương thức không hợp lệ");
         exit();

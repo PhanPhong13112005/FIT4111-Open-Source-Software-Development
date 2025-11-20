@@ -20,7 +20,9 @@ switch ($action) {
  * Lấy tất cả người dùng
  */
 function handleGetAllUsers() {
-    return getAllUsers();
+    $roleFilter = $_GET['role'] ?? '';
+    $keyword = trim($_GET['keyword'] ?? '');
+    return getAllUsers($roleFilter, $keyword);
 }
 
 function handleGetUserById($id) {

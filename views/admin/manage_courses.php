@@ -65,6 +65,26 @@ checkLogin(__DIR__ . '/../index.php');
         </script>
 
         <a href="../admin/create_courses.php" class="btn btn-primary mb-3">➕ Thêm khóa học</a>
+        <form method="GET" class="row g-2 mb-3 align-items-center">
+            <div class="col-auto">
+                <input type="text" name="keyword" class="form-control" placeholder="Tìm theo tiêu đề"
+                    value="<?= htmlspecialchars($_GET['keyword'] ?? '') ?>">
+            </div>
+            <div class="col-auto">
+                <select name="priceRange" class="form-select" onchange="this.form.submit()">
+                    <option value="">Tất cả giá</option>
+                    <option value="0-100000" <?= (isset($_GET['priceRange']) && $_GET['priceRange'] == '0-100000') ? 'selected' : '' ?>>0 – 100k</option>
+                    <option value="100000-500000" <?= (isset($_GET['priceRange']) && $_GET['priceRange'] == '100000-500000') ? 'selected' : '' ?>>100k – 500k</option>
+                    <option value="500000-1000000" <?= (isset($_GET['priceRange']) && $_GET['priceRange'] == '500000-1000000') ? 'selected' : '' ?>>500k – 1 triệu</option>
+                    <option value="1000000-0" <?= (isset($_GET['priceRange']) && $_GET['priceRange'] == '1000000-0') ? 'selected' : '' ?>>Trên 1 triệu</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>" class="btn btn-secondary">Reset</a>
+            </div>
+        </form>
+
 
         <table class="table table-bordered table-striped align-middle">
             <thead class="table-light">
